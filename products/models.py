@@ -22,19 +22,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name 
 
-class Drink(models.Model):
-    id = models.AutoField(primary_key=True)
-    korean_name = models.CharField(max_length=45) 
-    english_name = models.CharField(max_length=45)
-    description = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'drinks'
-
-    def __str__(self):
-        return self.korean_name 
-
 class Allergy(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=45) 
@@ -45,15 +32,19 @@ class Allergy(models.Model):
     def __str__(self):
         return self.name 
 
-# Through table 직접 작성
-class Allergy_drink(models.Model):
+class Drink(models.Model):
     id = models.AutoField(primary_key=True)
-    allergy = models.ForeignKey(Allergy, on_delete=models.CASCADE)
-    drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
+    korean_name = models.CharField(max_length=45) 
+    english_name = models.CharField(max_length=45)
+    description = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    allergy = models.ManyToManyField(Allergy, null=True)
 
     class Meta:
-        db_table = 'allergy_drink'
+        db_table = 'drinks'
 
+    def __str__(self):
+        return self.korean_name 
 
 class Size(models.Model):
     id = models.AutoField(primary_key=True)
