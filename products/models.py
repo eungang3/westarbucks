@@ -45,7 +45,7 @@ class Allergy(models.Model):
     def __str__(self):
         return self.name 
 
-
+# Through table 직접 작성
 class Allergy_drink(models.Model):
     id = models.AutoField(primary_key=True)
     allergy = models.ForeignKey(Allergy, on_delete=models.CASCADE)
